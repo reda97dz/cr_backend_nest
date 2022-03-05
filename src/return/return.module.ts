@@ -4,6 +4,6 @@ import { ReturnController } from './return.controller';
 
 @Module({
   controllers: [ReturnController],
-  providers: [ReturnService]
+  providers: [ReturnService],
 })
 export class ReturnModule {}

@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash  String
+
+  firstName String?
+  lastName  String?
+
+  @@map("users")
+}
+
+model Car {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  model       String
+  plateNumber String
+  type        String
+  notes       String?
+
+  rents Rent[]
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fullName    String
+  phoneNumber String
+  license     String
+  birthDate   DateTime
+
+  rents Rent[]
+}
+
+model Rent {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  agentFullName String
+
+  startDate DateTime
+  endDate   DateTime
+
+  Customer   Customer @relation(fields: [customerId], references: [id])
+  customerId Int
+
+  Car   Car @relation(fields: [carId], references: [id])
+  carId Int
+
+  return Return?
+}
+
+model Return {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  date          DateTime
+  agentFullName String
+  comments      String
+
+  rent   Rent @relation(fields: [rentId], references: [id])
+  rentId Int  @unique
+}

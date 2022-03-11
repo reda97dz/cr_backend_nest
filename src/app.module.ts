@@ -5,9 +5,6 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { CarModule } from './car/car.module';
 import { RentModule } from './rent/rent.module';
-import { CustomerModule } from './customer/customer.module';
-import { RentModule } from './rent/rent.module';
-import { ReturnModule } from './return/return.module';
 import { ReturnModule } from './return/return.module';
 import { CustomerModule } from './customer/customer.module';
 

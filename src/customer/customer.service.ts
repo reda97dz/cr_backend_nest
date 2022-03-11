@@ -1,26 +1,44 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { EditCustomerDto } from './dto/edit-customer.dto';
 
 @Injectable()
 export class CustomerService {
-  create(createCustomerDto: CreateCustomerDto) {
-    return 'This action adds a new customer';
+  constructor(private prisma: PrismaService) {}
+
+  createCustomer(dto: CreateCustomerDto) {
+    return this.prisma.customer.create({ data: dto });
   }
 
-  findAll() {
-    return `This action returns all customer`;
+  getCustomers() {
+    return this.prisma.customer.findMany({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} customer`;
+  getCustomerById(customerId: number) {
+    return this.prisma.customer.findFirst({
+      where: {
+        id: customerId,
+      },
+    });
   }
 
-  update(id: number, updateCustomerDto: UpdateCustomerDto) {
-    return `This action updates a #${id} customer`;
-  }
+  async editCustomerById(customerId: number, dto: EditCustomerDto) {
+    const customer = await this.prisma.customer.findUnique({
+      where: {
+        id: customerId,
+      },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} customer`;
+    if (!customer) throw new ForbiddenException('Access to resources denied');
+
+    return this.prisma.customer.update({
+      where: {
+        id: customerId,
+      },
+      data: {
+        ...dto,
+      },
+    });
   }
 }

@@ -14,7 +14,7 @@ import { CreateCarDto } from './dto';
 import { EditCarDto } from './dto/edit-car.dto';
 
 @UseGuards(JwtGuard)
-@Controller('car')
+@Controller('cars')
 export class CarController {
   constructor(private carService: CarService) {}
 

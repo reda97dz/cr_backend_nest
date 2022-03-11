@@ -5,41 +5,39 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guard';
 import { CustomerService } from './customer.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
-import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { EditCustomerDto } from './dto/edit-customer.dto';
 
-@Controller('customer')
+@UseGuards(JwtGuard)
+@Controller('customers')
 export class CustomerController {
   constructor(private readonly customerService: CustomerService) {}
 
   @Post()
-  create(@Body() createCustomerDto: CreateCustomerDto) {
-    return this.customerService.create(createCustomerDto);
+  createCustomer(@Body() createCustomerDto: CreateCustomerDto) {
+    return this.customerService.createCustomer(createCustomerDto);
   }
 
   @Get()
-  findAll() {
-    return this.customerService.findAll();
+  getCustomers() {
+    return this.customerService.getCustomers();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.customerService.findOne(+id);
+  getCustomerById(@Param('id', ParseIntPipe) customerId: number) {
+    return this.customerService.getCustomerById(customerId);
   }
 
   @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateCustomerDto: UpdateCustomerDto,
+  editCustomerById(
+    @Param('id', ParseIntPipe) customerId: number,
+    @Body() dto: EditCustomerDto,
   ) {
-    return this.customerService.update(+id, updateCustomerDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.customerService.remove(+id);
+    return this.customerService.editCustomerById(customerId, dto);
   }
 }

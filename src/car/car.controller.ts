@@ -8,7 +8,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from '../auth/guard';
 import { CarService } from './car.service';
 import { CreateCarDto } from './dto';
 import { EditCarDto } from './dto/edit-car.dto';

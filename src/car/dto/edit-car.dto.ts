@@ -3,15 +3,15 @@ import { IsAlphanumeric, IsOptional, IsString } from 'class-validator';
 export class EditCarDto {
   @IsString()
   @IsOptional()
-  model: string;
+  model?: string;
 
   @IsAlphanumeric()
   @IsOptional()
-  plateNumber: string;
+  plateNumber?: string;
 
   @IsString()
   @IsOptional()
-  type: string;
+  type?: string;
 
   @IsString()
   @IsOptional()

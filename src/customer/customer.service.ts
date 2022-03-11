@@ -1,5 +1,5 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { EditCustomerDto } from './dto/edit-customer.dto';
 
@@ -30,7 +30,7 @@ export class CustomerService {
       },
     });
 
-    if (!customer) throw new ForbiddenException('Access to resources denied');
+    if (!customer) throw new NotFoundException('Not found!');
 
     return this.prisma.customer.update({
       where: {

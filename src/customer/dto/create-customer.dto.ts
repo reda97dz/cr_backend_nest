@@ -1,6 +1,7 @@
 import {
   IsAlphanumeric,
   IsDate,
+  IsDateString,
   IsNotEmpty,
   IsPhoneNumber,
   IsString,
@@ -19,7 +20,7 @@ export class CreateCustomerDto {
   @IsNotEmpty()
   license: string;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
-  birthDate: Date;
+  birthDate: string;
 }

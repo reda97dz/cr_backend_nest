@@ -21,5 +21,5 @@ export class EditCustomerDto {
 
   @IsDate()
   @IsOptional()
-  birthDate?: Date;
+  birthDate?: string;
 }

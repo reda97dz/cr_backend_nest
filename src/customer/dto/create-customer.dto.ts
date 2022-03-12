@@ -1,6 +1,5 @@
 import {
   IsAlphanumeric,
-  IsDate,
   IsDateString,
   IsNotEmpty,
   IsPhoneNumber,

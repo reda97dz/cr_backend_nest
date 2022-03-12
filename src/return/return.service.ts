@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
-import { CreateReturnDto } from './dto/create-return.dto';
-import { UpdateReturnDto } from './dto/update-return.dto';
+import { ForbiddenException, Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateReturnDto, EditReturnDto } from './dto';
 
 @Injectable()
 export class ReturnService {
-  create(createReturnDto: CreateReturnDto) {
-    return 'This action adds a new return';
+  constructor(private prisma: PrismaService) {}
+  createReturn(dto: CreateReturnDto) {
+    return this.prisma.return.create({ data: dto });
   }
 
-  findAll() {
-    return `This action returns all return`;
+  getReturns() {
+    return this.prisma.return.findMany({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} return`;
+  getReturnById(returnId: number) {
+    return this.prisma.return.findFirst({
+      where: {
+        id: returnId,
+      },
+    });
   }
 
-  update(id: number, updateReturnDto: UpdateReturnDto) {
-    return `This action updates a #${id} return`;
-  }
+  async editReturnById(returnId: number, dto: EditReturnDto) {
+    const carReturn = await this.prisma.return.findUnique({
+      where: {
+        id: returnId,
+      },
+    });
 
-  remove(id: number) {
-    return `This action removes a #${id} return`;
+    if (!carReturn) throw new ForbiddenException('Access to resources denied');
+
+    return this.prisma.return.update({
+      where: {
+        id: returnId,
+      },
+      data: {
+        ...dto,
+      },
+    });
   }
 }

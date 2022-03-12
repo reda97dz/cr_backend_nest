@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Rent } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { CreateRentDto } from './dto/create-rent.dto';
-import { EditRentDto } from './dto/edit-rent.dto';
+import { CreateRentDto } from './dto';
+import { EditRentDto } from './dto';
 
 @Injectable()
 export class RentService {

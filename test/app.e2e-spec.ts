@@ -7,8 +7,7 @@ import { AuthDto } from '../src/auth/dto';
 import { EditUserDto } from '../src/user/dto';
 import { CreateCarDto, EditCarDto } from 'src/car/dto';
 import { CreateCustomerDto, EditCustomerDto } from 'src/customer/dto';
-import { CreateRentDto } from 'src/rent/dto/create-rent.dto';
-import { EditRentDto } from 'src/rent/dto/edit-rent.dto';
+import { EditRentDto } from '../src/rent/dto/';
 
 describe('App e2e', () => {
   let app: INestApplication;
